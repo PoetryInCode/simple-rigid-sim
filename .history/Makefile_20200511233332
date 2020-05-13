@@ -1,0 +1,20 @@
+LINK = -lstdc++ -lSDL2 -lOpenGL -lGLEW -lGLU
+DBG = -Wall
+CC := clang $(DBG)
+
+all: build ;
+
+Color.o: Color.h
+Cube.o: Cube.h
+
+main.o:
+
+build: $(targets) ;
+	$(CC) ./src/main.cpp -o ./bin/main.o $(LINK)
+
+.PHONY: clean
+clean: main.o ;
+	rm -rf ./bin/*
+
+run: build ;
+	./bin/main.o

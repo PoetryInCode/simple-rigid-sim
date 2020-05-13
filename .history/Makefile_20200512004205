@@ -1,0 +1,16 @@
+LINK = -lstdc++ -lSDL2 -lOpenGL -lGLEW -lGLU
+DBG = -Wall
+CC := clang $(DBG)
+
+all: build ;
+
+build: $(targets) ;
+	@cd src/
+	$(CC) -c src/*.cpp
+
+.PHONY: clean
+clean: main.o ;
+	rm -rf ./bin/*
+
+run: build ;
+	./bin/main
