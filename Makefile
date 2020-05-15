@@ -1,6 +1,7 @@
+CC = clang
 LINK = -lstdc++ -lSDL2 -lOpenGL -lGLEW -lGLU
 DBG = -Wall
-CC := clang $(DBG) -c
+CC += $(DBG)
 
 all: build ;
 
