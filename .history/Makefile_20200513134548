@@ -1,1 +1,0 @@
-goals = bin/main.o bin/Cube.o bin/Color.o bin/Quad.o bin/Vertex.o
