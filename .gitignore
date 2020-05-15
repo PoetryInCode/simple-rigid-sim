@@ -1,4 +1,9 @@
-.history
-.kdev4
-.vscode
+.history*/
+
+.kdev4/
+
+.vscode/
+
 bin/*
+
+*.kdev4
