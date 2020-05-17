@@ -10,3 +10,13 @@ By default the [Makefile](./Makefile) is configured to compile with clang. But c
 Example:
 
 `CC = clang` => `CC = gcc`
+
+### Project Sources
+
+These were used to learn how to use OpenGL:
+
+https://learnopengl.com/
+
+https://lazyfoo.net/tutorials/OpenGL/index.php
+
+https://www.khronos.org/registry/OpenGL/index_gl.php
