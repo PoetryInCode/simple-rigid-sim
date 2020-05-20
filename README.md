@@ -2,6 +2,7 @@
 This is a largely physics/math based project that was created for a school project. It is a rendering engine built on OpenGL and
 SDL that can simulate how rigid bodies interact with each other under gravity.
 
+Currently due to time limitations on the project I didn't have enouh time to make a full 3D pipeline, so its currently a 2D engine.
 # Building
 Building this project requires OpenGL and SDL2 to be installed on your computer. A graphics card is recommended, but not necessary. 
 
