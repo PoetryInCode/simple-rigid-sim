@@ -1,13 +1,16 @@
 #include "Color.h"
-#include "Vertex.h"
-#include <GL/glew.h>
+#include "SDL2/SDL.h"
+#include "Vector.h"
 
 class Quad {
   public:
-  myColor color;
-  Vertex topL,topR,botR,botL;
-  Quad(Vertex topL, Vertex topR, Vertex botR, Vertex botL);
+  Color color;
+  Vector topL,topR,botR,botL;
+  //Quad(Vector topL, Vector topR, Vector botR, Vector botL);
+  Quad(Vector topLeft, int width, int height);
+  Quad(Vector corner1, Vector corner2);
   Quad();
-  void setColor(myColor c);
-  void render();
+  void setColor(Color c);
+  void render(SDL_Renderer *renderer);
+  void translate(Vector vec);
 };
