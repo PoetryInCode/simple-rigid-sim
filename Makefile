@@ -1,11 +1,11 @@
 CC = clang
-LINK = -lstdc++ -lSDL2 -lOpenGL -lGLEW -lGLU
+LINK = -lstdc++ -lSDL2
 DBG = -Wall
 CC += $(DBG)
 
 all: build ;
 
-goals = bin/main.o bin/Cube.o bin/Color.o bin/Quad.o bin/Vertex.o
+goals = bin/main.o bin/Color.o bin/Quad.o bin/Vector.o
 
 define pro =
 $(CC) -c $^ -o $@
@@ -13,14 +13,15 @@ endef
 
 bin/main.o: src/main.cpp
 	$(pro)
-bin/Cube.o: src/Cube.cpp
-	$(pro)
+#bin/Cube.o: src/Cube.cpp
+#	$(pro)
 bin/Color.o: src/Color.cpp
 	$(pro)
 bin/Quad.o: src/Quad.cpp
 	$(pro)
-bin/Vertex.o: src/Vertex.cpp
+bin/Vector.o: src/Vector.cpp
 	$(pro)
+
 #targets = $(patsubst bin/%.o,src/%.cpp,$(goals))
 #$(goals): $(targets) ;
 #	$(foreach goal,$(goals),$( \
