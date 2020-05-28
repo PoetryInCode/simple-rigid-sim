@@ -1,13 +1,29 @@
-#define RED_f4 1.0f,0.0f,0.0f,1.0f
-#define GREEN_f4 0.0f,1.0f,0.0f,1.0f
-#define BLUE_f4 0.0f,0.0f,1.0f,1.0f
-#define PURPLE_f4 1.0f,0.0f,1.0f,1.0f
-#define WHITE_f4 1.0f,1.0f,1.0f,1.0f
-#define BLACK_f4 0.0f,0.0f,0.0f,1.0f
+#include <stdint.h>
 
-class myColor {
+#ifndef RED
+#define RED 255,0,0,255
+#endif
+#ifndef GREEN
+#define GREEN 0,255,0,255
+#endif
+#ifndef BLUE
+#define BLUE 0,0,255,255
+#endif
+#ifndef PURPLE
+#define PURPLE 255,0,255,255
+#endif
+#ifndef WHITE
+#define WHITE 255,255,255,255
+#endif
+#ifndef BLACK
+#define BLACK 0,0,0,255
+#endif
+
+typedef unsigned char Uint8;
+
+class Color {
   public:
-  float r,g,b,a;
-  myColor();
-  myColor(float r,float g,float b,float a);
+  uint8_t r,g,b,a;
+  Color();
+  Color(uint8_t r,uint8_t g,uint8_t b,uint8_t a);
 };
