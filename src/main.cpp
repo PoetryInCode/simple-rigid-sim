@@ -1,8 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_timer.h>
-#include <vector>
-#include "Quad.h"
+#include "phys_obj.h"
 
 SDL_Window *win = NULL;
 SDL_Renderer *rend = NULL;
@@ -51,6 +50,10 @@ bool clamp(float *value, float val) {
   }
 }
 
+void gravity(phys_obj &obj) {
+  obj.velocity = Vector(0,obj.velocity.y--);
+}
+
 int main() {
   init();
   cc = Color(BLACK);
@@ -78,8 +81,8 @@ int main() {
 
   Quad rect;
 
-  Quad *grav_objs = (Quad *)malloc(0);
-  std::vector<Quad> objs;
+  std::vector<phys_obj> objs;
+  //std::vector<int> yvalues;
 
   while(run) {
     if(modified) {
@@ -103,7 +106,7 @@ int main() {
         case SDL_MOUSEBUTTONUP:
           printf("Mouse released at %i,%i\n",x2,y2);
           trackmouse = false;
-          objs.push_back(rect);
+          objs.push_back(phys_obj(rect, Vector(0,0)));
           //grav_objs = (Quad *)calloc(1,sizeof(Quad));
           //grav_objs[sizeof(grav_objs)/sizeof(grav_objs[0])] = rect;
           //printf("grav objs: %lu\n",(sizeof(grav_objs)/sizeof(grav_objs[0])));
@@ -158,6 +161,13 @@ int main() {
           }
         break;
       break;
+      case SDL_WINDOWEVENT:
+        switch(event.window.event) {
+          case SDL_WINDOWEVENT_RESIZED:
+            SDL_GetWindowSize(win,&w,&h);
+          break;
+        }
+      break;
       }
     }
     //change_vector[0] = clamp(&buffer.x,clamp_min);
@@ -167,12 +177,11 @@ int main() {
       rect.setColor(Color(GREEN));
       rect.render(rend);
     }
-    /*for(int i=0; i<sizeof(grav_objs)/sizeof(grav_objs[0]); i++) {
-      grav_objs[i].setColor(Color(WHITE));
-      grav_objs[i].render(rend);
-    }*/
     for(int i=0; i<objs.size(); i++) {
-      objs[i].render(rend);
+      if(!(objs[0].bounds.max.y >= h)) {
+        gravity(objs[i]);
+      }
+      objs[0].render(rend);
     }
     if(change_vector[0]) {
       if(buffer.x != 0.0) {
@@ -193,7 +202,6 @@ int main() {
     quad.translate(buffer);
     quad.render(rend);
     SDL_RenderPresent(rend);
-    SDL_GetWindowSize(win,&w,&h);
     SDL_Delay(1000/60);
   }
   return 0;

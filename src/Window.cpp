@@ -27,4 +27,3 @@ int Window::initUI() {
     SDL_RENDERER_ACCELERATED
   );
 }
-
