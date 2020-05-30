@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "phys_obj.h"
 
 SDL_Window *win = NULL;
@@ -51,7 +52,7 @@ bool clamp(float *value, float val) {
 }
 
 void gravity(phys_obj &obj) {
-  obj.velocity = Vector(0,obj.velocity.y--);
+  obj.velocity = Vector(0,obj.velocity.y++);
 }
 
 int main() {
@@ -178,10 +179,10 @@ int main() {
       rect.render(rend);
     }
     for(int i=0; i<objs.size(); i++) {
-      if(!(objs[0].bounds.max.y >= h)) {
+      if(!(objs[i].bounds.max.y >= h)) {
         gravity(objs[i]);
       }
-      objs[0].render(rend);
+      objs[i].render(rend);
     }
     if(change_vector[0]) {
       if(buffer.x != 0.0) {
