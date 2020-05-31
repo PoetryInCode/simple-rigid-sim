@@ -1,5 +1,8 @@
 #include <stdint.h>
 
+#ifndef COLOR
+#define COLOR
+
 #ifndef RED
 #define RED 255,0,0,255
 #endif
@@ -27,3 +30,4 @@ class Color {
   Color();
   Color(uint8_t r,uint8_t g,uint8_t b,uint8_t a);
 };
+#endif
