@@ -1,11 +1,11 @@
 CC = clang
-LINK = -lstdc++ -lSDL2
+LINK = -lstdc++ -lSDL2 -lm -ldl -lSDL_gfx
 DBG = -Wall -O3
 CC += $(DBG)
 
 all: build ;
 
-goals = bin/main.o bin/Color.o bin/Quad.o bin/Vector.o bin/phys_obj.o bin/BoundingBox.o
+goals = bin/main.o bin/Color.o bin/Quad.o bin/Vector.o bin/phys_obj.o bin/BoundingBox.o bin/Circle.o
 
 define pro =
 $(CC) -c $^ -o $@
@@ -22,6 +22,8 @@ bin/Quad.o: src/Quad.cpp
 bin/Vector.o: src/Vector.cpp
 	$(pro)
 bin/phys_obj.o: src/phys_obj.cpp
+	$(pro)
+bin/Circle.o: src/Circle.cpp
 	$(pro)
 
 #targets = $(patsubst bin/%.o,src/%.cpp,$(goals))
