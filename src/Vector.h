@@ -5,5 +5,6 @@ class Vector {
   float x,y;
   Vector();
   Vector(float x, float y);
+  int distanceTo(Vector vec);
 };
 #endif
