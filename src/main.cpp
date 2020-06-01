@@ -3,6 +3,7 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "phys_obj.h"
+#include "Circle.h"
 
 SDL_Window *win = NULL;
 SDL_Renderer *rend = NULL;
@@ -81,9 +82,13 @@ int main() {
   int x1,y1,x2,y2;
 
   Quad rect;
+  Circle draw;
 
   std::vector<phys_obj> objs;
   //std::vector<int> yvalues;
+
+  Circle c = Circle(Vector(250,250),50);
+  c.setColor(Color(RED));
 
   while(run) {
     if(modified) {
@@ -107,7 +112,7 @@ int main() {
         case SDL_MOUSEBUTTONUP:
           printf("Mouse released at %i,%i\n",x2,y2);
           trackmouse = false;
-          objs.push_back(phys_obj(rect, Vector(0,0)));
+          objs.push_back(phys_obj(draw, Vector(0,0)));
           //grav_objs = (Quad *)calloc(1,sizeof(Quad));
           //grav_objs[sizeof(grav_objs)/sizeof(grav_objs[0])] = rect;
           //printf("grav objs: %lu\n",(sizeof(grav_objs)/sizeof(grav_objs[0])));
@@ -171,16 +176,18 @@ int main() {
       break;
       }
     }
-    //change_vector[0] = clamp(&buffer.x,clamp_min);
-    //change_vector[1] = clamp(&buffer.y,clamp_min);
     if(trackmouse) {
-      rect = Quad(Vector(x1,y1),Vector(x2,y2));
+      /*rect = Quad(Vector(x1,y1),Vector(x2,y2));
       rect.setColor(Color(GREEN));
-      rect.render(rend);
+      rect.render(rend);*/
+      if(x1 != x2 && y1 != y2) {
+        draw = Circle(Vector(x1,y1),Vector(x1,y1).distanceTo(Vector(x2,y2)));
+        draw.setColor(Color(GREEN));
+        draw.render(rend);
+      }
     }
     for(int i=0; i<objs.size(); i++) {
-      if(!(objs[i].bounds.max.y >= h)) {
-        gravity(objs[i]);
+      if(objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h)) >= objs[i].obj.radius) {
       }
       objs[i].render(rend);
     }
@@ -200,6 +207,8 @@ int main() {
         buffer.y = 0;
       }
     }
+    c.translate(buffer);
+    c.render(rend);
     quad.translate(buffer);
     quad.render(rend);
     SDL_RenderPresent(rend);
