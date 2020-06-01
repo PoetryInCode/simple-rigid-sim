@@ -3,6 +3,8 @@
 #include "Vector.h"
 #include "Color.h"
 
+#ifndef CIRCLE
+#define CIRCLE
 class Circle {
   private:
   int testpoint(int x,int y) {
@@ -26,4 +28,6 @@ class Circle {
   void render(SDL_Renderer *renderer);
   void translate(Vector vec);
   void setColor(Color c);
+  //bool isInitialized();
 };
+#endif

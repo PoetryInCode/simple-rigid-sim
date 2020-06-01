@@ -12,6 +12,7 @@ Circle::Circle(Vector c, int r) {
   center.y = c.y;
   radius = r;
 }
+Circle::Circle() {}
 
 void Circle::translate(Vector vec) {
   if(vec.x != 0) {
@@ -39,3 +40,12 @@ void Circle::render(SDL_Renderer *renderer) {
   }
   SDL_SetRenderDrawColor(renderer,r,g,b,a);
 }
+
+/*
+bool Circle::isInitialized() {
+  if(center.x == NULL) {
+    return false;
+  } else {
+    return true;
+  }
+}*/

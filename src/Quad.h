@@ -16,4 +16,5 @@ class Quad {
   void setColor(Color c);
   void render(SDL_Renderer *renderer);
   void translate(Vector vec);
+  //bool isInitialized();
 };

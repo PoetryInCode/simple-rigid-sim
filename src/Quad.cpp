@@ -88,3 +88,12 @@ std::vector<int> Quad::yvalues() {
   values.push_back(botL.y);
   return values;
 }
+
+/*
+bool Quad::isInitialized() {
+  if(topL.x != NULL) {
+    return true;
+  } else {
+    return false;
+  }
+}*/
