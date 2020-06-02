@@ -52,8 +52,8 @@ bool clamp(float *value, float val) {
   }
 }
 
-void gravity(phys_obj &obj) {
-  obj.velocity = Vector(0,obj.velocity.y++);
+void gravity(phys_obj *obj) {
+  obj[0].velocity = Vector(obj[0].velocity.x,obj[0].velocity.x++);
 }
 
 int main() {
@@ -186,8 +186,24 @@ int main() {
         draw.render(rend);
       }
     }
+    int floor_dis;
     for(int i=0; i<objs.size(); i++) {
-      if(objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h)) >= objs[i].obj.radius) {
+      floor_dis = objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h));
+      if(floor_dis >= objs[i].obj.radius) {
+        objs[i].velocity.y++;
+        objs[i].translate(objs[i].velocity);
+        printf("velocity of object %i (%f,%f)\n",i,objs[i].velocity.x,objs[i].velocity.y);
+        //objs[i].calculate_vectors(objs);
+      } else {
+        if(objs[i].velocity.y != 0) {
+          printf("Zeroing object %i\n",i);
+          objs[i].velocity.y = 0;
+          printf("velocity: (%f,%f)\n",objs[i].velocity.x,objs[i].velocity.y);
+        }
+        if(objs[i].obj.y != (h-objs[i].obj.radius)) {
+          objs[i].obj.y = h-objs[i].obj.radius;
+          printf("Moving %i off of border to (%i,%i)\n",i,objs[i].obj.x,objs[i].obj.y);
+        }
       }
       objs[i].render(rend);
     }
