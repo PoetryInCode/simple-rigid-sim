@@ -6,7 +6,10 @@ Vector::Vector(float x, float y) {
   this->y=y;
 }
 
-Vector::Vector() {}
+Vector::Vector() {
+  this->x=0;
+  this->y=0;
+}
 
 int Vector::distanceTo(Vector vec) {
   return sqrt(pow(abs(x - vec.x),2)+pow(abs(y - vec.y),2));
