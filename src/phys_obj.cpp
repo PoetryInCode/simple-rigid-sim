@@ -85,3 +85,7 @@ void phys_obj::calculate_vectors(std::vector<phys_obj> objects) {
     }
   }
 }
+
+void phys_obj::setPosition(Vector vec) {
+  obj.center = vec;
+}

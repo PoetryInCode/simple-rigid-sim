@@ -19,4 +19,5 @@ class phys_obj {
   void translate(Vector vec);
   bool checkCollision(phys_obj o);
   int distanceTo(Circle c);
+  void setPosition(Vector vec);
 };
