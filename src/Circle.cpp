@@ -41,6 +41,9 @@ void Circle::render(SDL_Renderer *renderer) {
   SDL_SetRenderDrawColor(renderer,r,g,b,a);
 }
 
+void Circle::setPosition(Vector vec) {
+  center = vec;
+}
 /*
 bool Circle::isInitialized() {
   if(center.x == NULL) {

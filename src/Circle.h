@@ -28,6 +28,7 @@ class Circle {
   void render(SDL_Renderer *renderer);
   void translate(Vector vec);
   void setColor(Color c);
+  void setPosition(Vector vec);
   //bool isInitialized();
 };
 #endif
