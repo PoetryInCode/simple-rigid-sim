@@ -7,3 +7,5 @@
 bin/*
 
 .ccls-cache/*
+
+*.gch
