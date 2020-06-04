@@ -9,3 +9,5 @@ bin/*
 .ccls-cache/*
 
 *.gch
+
+vgcore.*

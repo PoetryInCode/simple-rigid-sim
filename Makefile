@@ -1,6 +1,6 @@
 CC = clang
 LINK = -lstdc++ -lSDL2 -lm -ldl -lSDL_gfx
-DBG = -Wall -O3
+DBG = -Wall -g -gmodules -O0
 CC += $(DBG)
 
 all: build ;
@@ -37,7 +37,7 @@ build: $(goals) ;
 	$(CC) $(goals) -o ./bin/simulator $(LINK)
 
 #bin/%.o : src/%.cpp ;
-	
+
 
 .PHONY: clean
 clean:
