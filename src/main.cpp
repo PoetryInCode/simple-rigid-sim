@@ -193,13 +193,13 @@ int main() {
     int floor_dis;
     for(uint i=0; i<objs.size(); i++) {
       floor_dis = objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h));
-			objs[i].calculate_vectors(&objs);
+			objs[i].calculate_vectors(&objs,Vector(w,h));
       if(floor_dis >= objs[i].obj.radius && i != 0) {
         objs[i].force(Vector(0,1));
         objs[i].translate(objs[i].velocity);
         printf("velocity of object %i (%f,%f)\n",i,objs[i].velocity.x,objs[i].velocity.y);
         //objs[i].calculate_vectors(objs);
-      } else {
+      }/* else {
         if(objs[i].velocity.y != 0) {
           printf("Zeroing object %i\n",i);
           objs[i].velocity.y = 0;
@@ -209,7 +209,7 @@ int main() {
           objs[i].obj.y = h-objs[i].obj.radius;
           printf("Moving %i off of border to (%i,%i)\n",i,objs[i].obj.x,objs[i].obj.y);
         }
-      }
+      }*/
       objs[i].render(rend);
     }
     if(change_vector[0]) {

@@ -105,25 +105,57 @@ bool allEq(std::vector<float> nums, float comp) {
 	}
 }
 
-void phys_obj::calculate_vectors(std::vector<phys_obj> *objects) {
+void phys_obj::calculate_vectors(
+	std::vector<phys_obj> *objects,
+	Vector win_dim
+) {
 	for(uint i=0; i<objects[0].size(); i++) {
+		Circle io=objects[0][i].obj;
+		Vector ic=io.center;
 		for(uint a=0; a<objects[0].size(); a++) {
-			if(i != a) {
-				if(objects[0][i].checkCollision(objects[0][a])) {
-					printf("%i colliding with %i\n",i,a);
-					Circle io=objects[0][i].obj,ao=objects[0][a].obj;
-					Vector ic=io.center,ac=ao.center;
-					objects[0][i].translate(Vector(
+			Circle ao=objects[0][a].obj;
+			Vector ac=ao.center;
+			if(i != a) { //dont check collision against self
+				if(objects[0][i].checkCollision(objects[0][a])) {//check collision
+					objects[0][i].translate(Vector(//move object out of other object
 						-1*( io.getOverlap(ao)*ic.xDif(ac)/ic.distanceTo(ac)),
 						-1*( io.getOverlap(ao)*ic.yDif(ac)/ic.distanceTo(ac))
 					));
-					printf("resolving overlap\n");
 					objects[0][a].translate(Vector(
 						io.getOverlap(ao)*ic.xDif(ac)/ic.distanceTo(ac),
 						io.getOverlap(ao)*ic.yDif(ac)/ic.distanceTo(ac)
 					));
 				}
 			}
+			//window border collision detection
+			if(ac.x+ao.radius < 0 ) { //left wall collision
+				objects[0][a].translate(Vector(
+					ac.xDif(Vector(0,ac.y))+ao.radius,
+					0
+				));
+			} else if (ac.x+ao.radius > win_dim.x) {//right wall collision
+				objects[0][a].translate(Vector(
+					-1*(ac.xDif(Vector(win_dim.x,0))+ao.radius),
+					0
+				));
+			}
+			if(ac.y+ao.radius < 0 ) {//top collision
+				//zero out the y component if it has collided
+				objects[0][a].translate(Vector(
+					0,
+					ac.yDif(Vector(0,ac.y+ao.radius))
+				));
+			} else if (ac.y+ao.radius > win_dim.y) {//bottom collision
+				objects[0][a].contact_floor = true;
+				objects[0][a].translate(Vector(
+					0,
+					-1*(ac.yDif(Vector(0,win_dim.y-ao.radius)))
+				));
+			}/* else {
+				if(objects[0][a].contact_floor) {
+					objects[0][a].contact_floor = false;
+				}
+			}*/
 		}
 	}
 	/*
