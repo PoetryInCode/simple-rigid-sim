@@ -4,6 +4,7 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "phys_obj.h"
 #include "Circle.h"
+#include <time.h>
 
 SDL_Window *win = NULL;
 SDL_Renderer *rend = NULL;
@@ -31,7 +32,7 @@ int init() {
     return 0;
   } else {
     return 1;
-  } 
+  }
 }
 
 uint8_t rt,gt,bt,at;
@@ -52,6 +53,7 @@ bool clamp(float *value, float val) {
   }
 }
 
+clock_t t=0;
 void gravity(phys_obj *obj) {
   obj[0].velocity = Vector(obj[0].velocity.x,obj[0].velocity.x++);
 }
@@ -59,7 +61,7 @@ void gravity(phys_obj *obj) {
 int main() {
   init();
   cc = Color(BLACK);
-  
+
   bool run = true;
   int w,h;
   //int mouseX,mouseY;
@@ -89,6 +91,8 @@ int main() {
 
   Circle c = Circle(Vector(250,250),50);
   c.setColor(Color(RED));
+
+	objs.push_back(phys_obj(c));
 
   while(run) {
     if(modified) {
@@ -187,10 +191,11 @@ int main() {
       }
     }
     int floor_dis;
-    for(int i=0; i<objs.size(); i++) {
+    for(uint i=0; i<objs.size(); i++) {
       floor_dis = objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h));
-      if(floor_dis >= objs[i].obj.radius) {
-        objs[i].velocity.y++;
+			objs[i].calculate_vectors(&objs);
+      if(floor_dis >= objs[i].obj.radius && i != 0) {
+        objs[i].force(Vector(0,1));
         objs[i].translate(objs[i].velocity);
         printf("velocity of object %i (%f,%f)\n",i,objs[i].velocity.x,objs[i].velocity.y);
         //objs[i].calculate_vectors(objs);

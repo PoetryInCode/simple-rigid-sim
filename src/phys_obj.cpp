@@ -7,8 +7,12 @@ phys_obj::phys_obj(Quad object, Vector init_vel) {
   this->bounds=BoundingBox(object);
 }*/
 void phys_obj::force(Vector vec) {
-  this->velocity.x += vec.x;
-  this->velocity.y += vec.y;
+	if(vec.x != 0) {
+		this->velocity.x += vec.x;
+	}
+	if(vec.y != 0) {
+		this->velocity.y += vec.y;
+	}
 }
 void phys_obj::render(SDL_Renderer *rend) {
   /*
@@ -44,46 +48,119 @@ int phys_obj::distanceTo(Circle c) {
 }
 
 bool phys_obj::checkCollision(phys_obj o) {
-  if(distanceTo(o.obj) <= obj.radius) {
+  if((o.obj.radius + obj.radius) >=  distanceTo(o.obj)) {
     return true;
   } else {
     return false;
   }
 }
 
-void phys_obj::calculate_vectors(std::vector<phys_obj> objects) {
-  for(int i=0; i<objects.size(); i++) {
-    Vector step;
-    int xvel = objects[i].velocity.x;
-    int yvel = objects[i].velocity.y;
-    if(xvel != 0) {
-      if(xvel < 0) {
-        objects[i].velocity.x++;
-        step.x = -1;
-      } else {
-        if(xvel > 0) {
-          objects[i].velocity.x--;
-          step.x = 1;
-        }
-      }
-    }
-    if(yvel != 0) {
-      if(yvel < 0) {
-        objects[i].velocity.y++;
-        step.y = -1;
-      } else {
-        if(yvel > 0) {
-          objects[i].velocity.y--;
-          step.y = 1;
-        }
-      }
-    }
-    objects[i].translate(step);
-    for(int y=0; y<objects.size(); y++) {
-      if(y != i) {
-      }
+std::vector<float> getYforces(std::vector<phys_obj> objs) {
+  std::vector<float> values;
+  for(uint i=0; i<objs.size(); i++) {
+    values.push_back(objs[i].velocity.y);
+  }
+  return values;
+}
+
+std::vector<float> getXforces(std::vector<phys_obj> objs) {
+  std::vector<float> values;
+  for(uint i=0; i<objs.size(); i++) {
+    values.push_back(objs[i].velocity.x);
+  }
+  return values;
+}
+
+bool noneEq(std::vector<float> nums, float comp) {
+  bool state = true;
+  for(uint i=0; i<nums.size(); i++) {
+    if(nums[i] == comp) {
+      state = false;
     }
   }
+  return state;
+}
+
+bool anyEq(std::vector<float> nums, float comp) {
+  bool state = false;
+  for(uint i=0; i<nums.size(); i++) {
+    if(nums[i] == comp) {
+      state = true;
+    }
+  }
+  return state;
+}
+
+bool allEq(std::vector<float> nums, float comp) {
+	uint state=0;
+	for(uint i=0; i<nums.size(); i++) {
+		if(nums[i] == comp) {
+			state++;
+		}
+	}
+	if(state == nums.size()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void phys_obj::calculate_vectors(std::vector<phys_obj> *objects) {
+	for(uint i=0; i<objects[0].size(); i++) {
+		for(uint a=0; a<objects[0].size(); a++) {
+			if(i != a) {
+				if(objects[0][i].checkCollision(objects[0][a])) {
+					printf("%i colliding with %i\n",i,a);
+					Circle io=objects[0][i].obj,ao=objects[0][a].obj;
+					Vector ic=io.center,ac=ao.center;
+					objects[0][i].translate(Vector(
+						-1*( io.getOverlap(ao)*ic.xDif(ac)/ic.distanceTo(ac)),
+						-1*( io.getOverlap(ao)*ic.yDif(ac)/ic.distanceTo(ac))
+					));
+					printf("resolving overlap\n");
+					objects[0][a].translate(Vector(
+						io.getOverlap(ao)*ic.xDif(ac)/ic.distanceTo(ac),
+						io.getOverlap(ao)*ic.yDif(ac)/ic.distanceTo(ac)
+					));
+				}
+			}
+		}
+	}
+	/*
+	do {
+  	for(uint i=0; i<objects.size(); i++) {
+    	Vector step, v_buffer=objects[i].velocity;
+    	int xvel = objects[i].velocity.x;
+    	int yvel = objects[i].velocity.y;
+			if(xvel != 0) {
+	     	if(xvel < 0) {
+	       	v_buffer.x++;
+	       	step.x = -1;
+	     	} else { //if xvel > 0
+	       	v_buffer.x--;
+	     		step.x = 1;
+	     	}
+	   	}
+	   	if(yvel != 0) {
+	     	if(yvel < 0) {
+	       	v_buffer.y++;
+	       	step.y = -1;
+	     	} else { //if yvel > 0
+	       	v_buffer.y--;
+	       	step.y = 1;
+	     	}
+	   	}
+	   	objects[i].translate(step);//translate the object
+	   	for(uint a=0; a<objects.size(); a++) {
+	     	if(i != a) {//dont check collision with self
+	       	if(objects[i].checkCollision(objects[a])) {
+						//caulculate collision here
+	       	}
+	     	}
+	   	}
+		}
+	} while(!allEq(getXforces(objects),0) || !allEq(getYforces(objects),0));
+	*/
 }
 
 void phys_obj::setPosition(Vector vec) {
