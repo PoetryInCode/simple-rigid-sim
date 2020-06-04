@@ -29,6 +29,7 @@ class Circle {
   void translate(Vector vec);
   void setColor(Color c);
   void setPosition(Vector vec);
+	float getOverlap(Circle c);
   //bool isInitialized();
 };
 #endif

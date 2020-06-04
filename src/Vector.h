@@ -6,5 +6,7 @@ class Vector {
   Vector();
   Vector(float x, float y);
   int distanceTo(Vector vec);
+	int xDif(Vector vec);
+	int yDif(Vector vec);
 };
 #endif

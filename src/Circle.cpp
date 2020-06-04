@@ -44,6 +44,10 @@ void Circle::render(SDL_Renderer *renderer) {
 void Circle::setPosition(Vector vec) {
   center = vec;
 }
+
+float Circle::getOverlap(Circle c) {
+	return (c.center.distanceTo(center)-radius-c.radius)/2;
+}
 /*
 bool Circle::isInitialized() {
   if(center.x == NULL) {

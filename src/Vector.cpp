@@ -12,5 +12,11 @@ Vector::Vector() {
 }
 
 int Vector::distanceTo(Vector vec) {
-  return sqrt(pow(abs(x - vec.x),2)+pow(abs(y - vec.y),2));
+  return sqrt(pow(abs(xDif(vec)),2)+pow(abs(yDif(vec)),2));
+}
+int Vector::xDif(Vector vec) {
+	return x-vec.x;
+}
+int Vector::yDif(Vector vec) {
+	return y-vec.y;
 }
