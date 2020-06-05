@@ -1,5 +1,5 @@
 CC = clang
-LINK = -lstdc++ -lSDL2 -lm -ldl -lSDL_gfx
+LINK = -lstdc++ -lSDL2 -lm -ldl #-lSDL_gfx
 DBG = -Wall -g -gmodules -O0
 CC += $(DBG)
 

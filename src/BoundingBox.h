@@ -1,6 +1,8 @@
+#ifndef BOUND
+#define BOUND
+
 #include <cstddef>
 #include "Quad.h"
-
 class BoundingBox {
   private:
   size_t parent;
@@ -42,3 +44,4 @@ class BoundingBox {
   void update();
   void render(SDL_Renderer *rend);
 };
+#endif

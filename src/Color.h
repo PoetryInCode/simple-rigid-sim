@@ -1,7 +1,6 @@
-#include <stdint.h>
-
 #ifndef COLOR
 #define COLOR
+#include <stdint.h>
 
 #ifndef RED
 #define RED 255,0,0,255

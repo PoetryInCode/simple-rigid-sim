@@ -1,3 +1,5 @@
+#ifndef QUAD
+#define QUAD
 #include <vector>
 #include "SDL2/SDL.h"
 #include "Vector.h"
@@ -18,3 +20,4 @@ class Quad {
   void translate(Vector vec);
   //bool isInitialized();
 };
+#endif
