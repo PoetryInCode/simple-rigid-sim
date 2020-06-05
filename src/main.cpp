@@ -68,10 +68,10 @@ int main() {
 
   SDL_GetWindowSize(win,&w,&h);
 
-  Vector vec = Vector(0,0);
+  //Vector vec = Vector(0,0);
 
-  Quad quad = Quad(vec,20,20);
-  quad.setColor(Color(RED));
+  //Quad quad = Quad(vec,20,20);
+  //quad.setColor(Color(RED));
 
   Vector buffer = Vector(0.0,0.0);
   bool change_vector[2] = {false,false};
@@ -83,16 +83,16 @@ int main() {
 
   int x1,y1,x2,y2;
 
-  Quad rect;
+  //Quad rect;
   Circle draw;
 
   std::vector<phys_obj> objs;
   //std::vector<int> yvalues;
 
-  Circle c = Circle(Vector(250,250),50);
-  c.setColor(Color(RED));
-
-	objs.push_back(phys_obj(c));
+  //Circle c = Circle(Vector(250,250),50);
+  //c.setColor(Color(RED));
+  
+  //objs.push_back(phys_obj(c));
 
   while(run) {
     if(modified) {
@@ -194,7 +194,7 @@ int main() {
     for(uint i=0; i<objs.size(); i++) {
       floor_dis = objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h));
 			objs[i].calculate_vectors(&objs,Vector(w,h));
-      if(floor_dis >= objs[i].obj.radius && i != 0) {
+      if(floor_dis >= objs[i].obj.radius) {
         objs[i].force(Vector(0,1));
         objs[i].translate(objs[i].velocity);
         printf("velocity of object %i (%f,%f)\n",i,objs[i].velocity.x,objs[i].velocity.y);
@@ -228,10 +228,10 @@ int main() {
         buffer.y = 0;
       }
     }
-    c.translate(buffer);
-    c.render(rend);
-    quad.translate(buffer);
-    quad.render(rend);
+    //c.translate(buffer);
+    //c.render(rend);
+    //quad.translate(buffer);
+    //quad.render(rend);
     SDL_RenderPresent(rend);
     SDL_Delay(1000/60);
   }

@@ -1,4 +1,5 @@
 #include "phys_obj.h"
+#include <iostream>
 
 /*
 phys_obj::phys_obj(Quad object, Vector init_vel) {
@@ -128,9 +129,10 @@ void phys_obj::calculate_vectors(
 				}
 			}
 			//window border collision detection
-			if(ac.x+ao.radius < 0 ) { //left wall collision
+			printf("left collision point %f\n", ac.x-ao.radius);
+			if((ac.x-ao.radius) < 0.0) { //left wall collision
 				objects[0][a].translate(Vector(
-					ac.xDif(Vector(0,ac.y))+ao.radius,
+					ao.radius-(ac.x-0),
 					0
 				));
 			} else if (ac.x+ao.radius > win_dim.x) {//right wall collision
@@ -140,22 +142,19 @@ void phys_obj::calculate_vectors(
 				));
 			}
 			if(ac.y+ao.radius < 0 ) {//top collision
-				//zero out the y component if it has collided
 				objects[0][a].translate(Vector(
 					0,
 					ac.yDif(Vector(0,ac.y+ao.radius))
 				));
 			} else if (ac.y+ao.radius > win_dim.y) {//bottom collision
+				//zero out the y component if it has collided
+				objects[0][a].velocity = Vector(objects[0][a].velocity.x,0);
 				objects[0][a].contact_floor = true;
 				objects[0][a].translate(Vector(
 					0,
 					-1*(ac.yDif(Vector(0,win_dim.y-ao.radius)))
 				));
-			}/* else {
-				if(objects[0][a].contact_floor) {
-					objects[0][a].contact_floor = false;
-				}
-			}*/
+			}
 		}
 	}
 	/*
