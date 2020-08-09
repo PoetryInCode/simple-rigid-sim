@@ -1,7 +1,7 @@
 #ifndef CIRCLE
 #define CIRCLE
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <cmath>
 #include "Vector.h"
 #include "Color.h"

@@ -1,7 +1,7 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
+#include <SDL.h>
+#include <SDL_timer.h>
+//#include <SDL2_gfxPrimitives.h>
 #include "phys_obj.h"
 #include "Circle.h"
 #include <time.h>
@@ -191,7 +191,7 @@ int main() {
       }
     }
     int floor_dis;
-    for(uint i=0; i<objs.size(); i++) {
+    for(int i=0; i<objs.size(); i++) {
       floor_dis = objs[i].obj.center.distanceTo(Vector(objs[i].obj.center.x,h));
 			objs[i].calculate_vectors(&objs,Vector(w,h));
       if(floor_dis >= objs[i].obj.radius) {

@@ -1,7 +1,7 @@
 #ifndef QUAD
 #define QUAD
 #include <vector>
-#include "SDL2/SDL.h"
+//#include "SDL2/SDL.h"
 #include "Vector.h"
 #include "Color.h"
 
